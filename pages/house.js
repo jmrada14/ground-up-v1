@@ -2,19 +2,13 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
+import { states } from "../util/utils";
 import MemberCard from "../components/MemberCard";
 import { connectToDatabase } from "../util/mongodb";
-export default function Home({ isConnected }) {
+
+export default function Home({ houseRepresentatives }) {
   return (
     <div className={styles.container}>
-      {isConnected ? (
-        <h2 className="subtitle">You are connected to MongoDB</h2>
-      ) : (
-        <h2 className="subtitle">
-          You are NOT connected to MongoDB. Check the <code>README.md</code> for
-          instructions.
-        </h2>
-      )}
       <Head>
         <title>House Of Representatives</title>
         <link rel="icon" href="/favicon.ico" />
@@ -46,32 +40,34 @@ export default function Home({ isConnected }) {
           <option value="D">Republican</option>
         </select>
         <div className={styles.grid}>
-          {memberData?.map(({ name, party, role, state, twitter }, index) => {
-            return (
-              <>
-                <MemberCard
-                  key={`card-${index}`}
-                  header={<h3>{name}</h3>}
-                  description={
-                    <ul key={`list-${index}`}>
-                      <li key={`listState-${index}`}>State: {state}</li>
-                      <li key={`listParty-${index}`}>Party: {party}</li>
-                      <li key={`listRole-${index}`}>Role: {role}</li>
-                      <li key={`listTwitter-${index}`}>
-                        Twitter: {twitter}{" "}
-                        <a
-                          className="mention-button"
-                          href="https://twitter.com/intent/tweet"
-                        >
-                          Tweet
-                        </a>
-                      </li>
-                    </ul>
-                  }
-                />
-              </>
-            );
-          })}
+          {houseRepresentatives?.map(
+            ({ name, party, role, state, twitter }, index) => {
+              return (
+                <>
+                  <MemberCard
+                    key={`card-${index}`}
+                    header={<h3>{name}</h3>}
+                    description={
+                      <ul key={`list-${index}`}>
+                        <li key={`listState-${index}`}>State: {state}</li>
+                        <li key={`listParty-${index}`}>Party: {party}</li>
+                        <li key={`listRole-${index}`}>Role: {role}</li>
+                        <li key={`listTwitter-${index}`}>
+                          Twitter: {twitter}{" "}
+                          <a
+                            className="mention-button"
+                            href="https://twitter.com/intent/tweet"
+                          >
+                            Tweet
+                          </a>
+                        </li>
+                      </ul>
+                    }
+                  />
+                </>
+              );
+            }
+          )}
         </div>
       </main>
       <footer className={styles.footer}>Fuck Copyright</footer>
@@ -79,12 +75,17 @@ export default function Home({ isConnected }) {
   );
 }
 
-export async function getServerSideProps(context) {
-  const { client } = await connectToDatabase();
+export async function getServerSideProps() {
+  const { db } = await connectToDatabase();
 
-  const isConnected = await client.isConnected(); // Returns true or false
+  const houseRepresentatives = await db
+    .collection("members")
+    .find({ chamber: "house" })
+    .toArray();
 
   return {
-    props: { isConnected },
+    props: {
+      houseRepresentatives: JSON.parse(JSON.stringify(houseRepresentatives)),
+    },
   };
 }
