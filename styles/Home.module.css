@@ -29,14 +29,8 @@
   margin-left: 0.5rem;
 }
 
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .title a {
-  color: #0070f3;
+  color: rgb(46, 121, 46);
   text-decoration: none;
 }
 
@@ -99,6 +93,22 @@
   border-color: #0070f3;
 }
 
+a.mention-button {
+  display: inline-block;
+  padding: 0.3em 1.2em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 2em;
+  box-sizing: border-box;
+  text-decoration: none;
+  font-weight: 300;
+  color: #660b0b;
+  background-color: #4eb5f1;
+  text-align: center;
+  transition: all 0.2s;
+}
+.twitter-mention-button:hover {
+  background-color: #4095c6;
+}
 .card h3 {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
