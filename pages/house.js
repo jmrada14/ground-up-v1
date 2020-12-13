@@ -17,7 +17,7 @@ export default function Home({ houseRepresentatives }) {
   let representativesToShow = houseRepresentatives;
   if (Object.entries(findInput).length) {
     representativesToShow = houseRepresentatives.filter(
-      ({ state, party }) => state === findInput.state
+      ({ state }) => state === findInput.state
     );
   }
 
