@@ -65,7 +65,7 @@ export default function Home() {
             description={
               <p>We can improve, so let's do it from the ground up!</p>
             }
-            route="/apiDocs"
+            route="/about"
           />
         </div>
       </main>
