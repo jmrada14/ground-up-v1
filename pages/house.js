@@ -36,7 +36,7 @@ export default function Home({ houseRepresentatives }) {
           </Link>
         </h1>
 
-        <h2>We can improve, so let's do it from the ground up!</h2>
+        <h2>House of Representatives</h2>
         <div className={styles.grid}></div>
         <label htmlFor="state">Filter By State</label>
         <select name="state" onChange={handleInput} id="filterSelect">
