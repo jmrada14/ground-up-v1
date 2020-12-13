@@ -18,7 +18,7 @@ export default function Home() {
           </Link>
         </h1>
 
-        <h2>We can improve, so let's do it from the ground up!</h2>
+        <h2>Get congress members data and more</h2>
         <h2>Coming soon...</h2>
         <div className={styles.grid}></div>
       </main>

@@ -50,7 +50,7 @@ export default function Home() {
           <Card
             header={
               <h3>
-                API(<code className={styles.code}>BETA</code>) &rarr;
+                API(<code className={styles.code}>Coming Soon</code>) &rarr;
               </h3>
             }
             description={

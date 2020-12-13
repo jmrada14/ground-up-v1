@@ -17,9 +17,7 @@ export default function Home() {
             <a>Ground Up</a>
           </Link>
         </h1>
-
-        <h2>We can improve, so let's do it from the ground up!</h2>
-        <h2>Coming soon...</h2>
+        <h2>About Us Coming Soon...</h2>
         <div className={styles.grid}></div>
       </main>
 
