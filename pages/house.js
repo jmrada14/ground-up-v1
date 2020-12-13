@@ -7,6 +7,20 @@ import MemberCard from "../components/MemberCard";
 import { connectToDatabase } from "../util/mongodb";
 
 export default function Home({ houseRepresentatives }) {
+  const [findInput, setFindInput] = React.useState({});
+  const handleInput = (event) => {
+    const { target } = event;
+    const value = target?.value;
+    const name = target?.name;
+    setFindInput({ ...findInput, [name]: value });
+  };
+  let representativesToShow = houseRepresentatives;
+  if (Object.entries(findInput).length) {
+    representativesToShow = houseRepresentatives.filter(
+      ({ state, party }) => state === findInput.state
+    );
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -24,8 +38,8 @@ export default function Home({ houseRepresentatives }) {
 
         <h2>We can improve, so let's do it from the ground up!</h2>
         <div className={styles.grid}></div>
-        <label htmlFor="state-filter">Filter By State</label>
-        <select name="filter" id="filterSelect">
+        <label htmlFor="state">Filter By State</label>
+        <select name="state" onChange={handleInput} id="filterSelect">
           <option value="All">All</option>
           {states.map((state, index) => (
             <option key={`option-${index}`} value={state}>
@@ -33,14 +47,14 @@ export default function Home({ houseRepresentatives }) {
             </option>
           ))}
         </select>
-        <label htmlFor="state-filter">Filter By Party</label>
-        <select name="filter" id="filterSelect">
+        {/* <label htmlFor="party">Filter By Party</label>
+        <select name="party" onChange={handleInput} id="filterSelect">
           <option value="All">All</option>
           <option value="D">Democrat</option>
           <option value="D">Republican</option>
-        </select>
+        </select> */}
         <div className={styles.grid}>
-          {houseRepresentatives?.map(
+          {representativesToShow?.map(
             ({ name, party, role, state, twitter }, index) => {
               return (
                 <>
