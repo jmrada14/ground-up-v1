@@ -2,17 +2,20 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
-import { fetchUrl, states } from "../utils/utils";
+import { fetchUrl, states } from "../util/utils";
 import MemberCard from "../components/MemberCard";
-
-export default function Home() {
-  const [memberData, setMemberData] = React.useState([]);
-  React.useEffect(() => {
-    fetchUrl("api/house").then((res) => setMemberData(res));
-  }, []);
-
+import { connectToDatabase } from "../util/mongodb";
+export default function Home({ isConnected }) {
   return (
     <div className={styles.container}>
+      {isConnected ? (
+        <h2 className="subtitle">You are connected to MongoDB</h2>
+      ) : (
+        <h2 className="subtitle">
+          You are NOT connected to MongoDB. Check the <code>README.md</code> for
+          instructions.
+        </h2>
+      )}
       <Head>
         <title>House Of Representatives</title>
         <link rel="icon" href="/favicon.ico" />
@@ -75,4 +78,14 @@ export default function Home() {
       <footer className={styles.footer}>Fuck Copyright</footer>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { client } = await connectToDatabase();
+
+  const isConnected = await client.isConnected(); // Returns true or false
+
+  return {
+    props: { isConnected },
+  };
 }
