@@ -41,9 +41,8 @@ export default function Home() {
             }
             description={
               <p>
-                Find Senators,
-                <br /> learn about them,
-                <br /> and take action
+                Find Senators, learn about the one's affecting your state, and
+                take action
               </p>
             }
             route="/senate"
